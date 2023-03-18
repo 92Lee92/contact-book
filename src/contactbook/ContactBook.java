@@ -33,7 +33,7 @@ public class ContactBook {
         Contact contact = new Contact(name, phoneNumber, email);
         contacts.add(contact);
 
-        saveContactBook();
+        save();
     }
 
     public ArrayList<Contact> getContacts() {
@@ -44,15 +44,7 @@ public class ContactBook {
         this.contacts = contacts;
     }
 
-    public void printContact(int index) {
-        Contact contact = contacts.get(index);
-        String name = contact.getName();
-        String phoneNumber = contact.getPhoneNumber();
-        String email = contact.getEmail();
-        System.out.println("이름: " + name + "\n전화번호: " + phoneNumber + "\n이메일: " + email);
-    }
-
-    public void printContactBook() {
+    public void print() {
         System.out.println("----------------------------------");
         for (int i = 0; i < contacts.size(); i++) {
             Contact contact = contacts.get(i);
@@ -65,7 +57,7 @@ public class ContactBook {
         }
     }
 
-    public void printContactList(ArrayList<Contact> contacts) {
+    public void print(ArrayList<Contact> contacts) {
         System.out.println("----------------------------------");
         for (int i = 0; i < contacts.size(); i++) {
             Contact contact = contacts.get(i);
@@ -78,7 +70,7 @@ public class ContactBook {
         }
     }
 
-    public void saveContactBook() throws FileNotFoundException {
+    public void save() throws FileNotFoundException {
         String fileName = "res/contactbook.csv";
         FileOutputStream fileOutputStream = new FileOutputStream(fileName);
         PrintStream printStream = new PrintStream(fileOutputStream);
@@ -86,7 +78,7 @@ public class ContactBook {
         for (int i = 0; i < contacts.size(); i++) {
             Contact contact = contacts.get(i);
 
-            String[] contents = contact.getContactContent(contact);
+            String[] contents = contact.getContent(contact);
             String name = contents[0];
             String phoneNumber = contents[1];
             String email = contents[2];
@@ -94,7 +86,7 @@ public class ContactBook {
         }
     }
 
-    public void loadContactBook() throws FileNotFoundException {
+    public void load() throws FileNotFoundException {
         String fileName = "res/contactbook.csv";
         FileInputStream fileInputStream = new FileInputStream(fileName);
         Scanner scanner = new Scanner(fileInputStream);
@@ -110,7 +102,10 @@ public class ContactBook {
         }
     }
 
-    public ArrayList<Contact> findByName(String name) {
+    public void findByName() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("검색할 이름을 입력하세요.");
+        String name = scanner.next();
         ArrayList<Contact> nameSearchResult = new ArrayList<>();
         for (int i = 0; i < contacts.size(); i++) {
             Contact contact = contacts.get(i);
@@ -118,17 +113,30 @@ public class ContactBook {
                 nameSearchResult.add(contact);
             }
         }
-        return nameSearchResult;
+        print(nameSearchResult);
+    }
+
+    public void findByphoneNumber() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("검색할 전화번호를 입력하세요.");
+        String phoneNumber = scanner.next();
+        ArrayList<Contact> numberSearchResult = new ArrayList<>();
+        for (int i = 0; i < contacts.size(); i++) {
+            Contact contact = contacts.get(i);
+            if (contact.getName().equals(phoneNumber)) {
+                numberSearchResult.add(contact);
+            }
+        }
+        print(numberSearchResult);
     }
 
     public void editMenu() throws FileNotFoundException {
         System.out.println("연락처 수정");
-        Scanner scanner = new Scanner(System.in);
         String name = "0";
-        printContactBook();
-
+        print();
 
         System.out.println("수정할 연락처의 번호를 입력하세요");
+        Scanner scanner = new Scanner(System.in);
         int toEdit = scanner.nextInt();
 
         Contact toEditContact = contacts.get(toEdit - 1);
@@ -136,43 +144,18 @@ public class ContactBook {
         int editMenu = scanner.nextInt();
         switch (editMenu) {
             case 1:
-                editContactName(toEditContact);
+                toEditContact.editName();
                 break;
             case 2:
-                editContactPhoneNumber(toEditContact);
+                toEditContact.editPhoneNumber();
                 break;
             case 3:
-                editContactEmail(toEditContact);
+                toEditContact.editEmail();
                 break;
             case 4:
                 break;
         }
-        saveContactBook();
-    }
-
-
-    private void editContactName(Contact toEditContact) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("새로운 이름을 입력하세요");
-        String newName = scanner.next();
-        toEditContact.setName(newName);
-    }
-
-    private void editContactEmail(Contact toEditContact) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("새로운 이메일을 입력하세요");
-        String newEmail = scanner.next();
-        toEditContact.setEmail(newEmail);
-    }
-
-    private void editContactPhoneNumber(Contact toEditContact) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("새로운 전화번호를 입력하세요");
-        String newPhoneNumber = scanner.next();
-        toEditContact.setPhoneNumber(newPhoneNumber);
+        save();
     }
 
     private void deleteContact(Contact toDeleteContact) {
@@ -183,8 +166,7 @@ public class ContactBook {
         System.out.println("연락처 삭제");
         Scanner scanner = new Scanner(System.in);
         String name = "0";
-        printContactBook();
-
+        print();
 
         System.out.println("삭제할 연락처의 번호를 입력하세요");
         int toDelete = scanner.nextInt();
@@ -198,9 +180,8 @@ public class ContactBook {
                 break;
             case 2:
                 break;
-
         }
-        saveContactBook();
+        save();
     }
 
 }

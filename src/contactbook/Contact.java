@@ -1,82 +1,68 @@
 package contactbook;
 
+import java.util.Scanner;
+
 public class Contact {
-    Name name;
-    PhoneNumber phoneNumber;
-    Email email;
+    String name;
+    String phoneNumber;
+    String email;
 
-    public Contact(Name name) {
-        this.name = name;
-    }
-
-    public Contact(PhoneNumber phoneNumber){
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Contact(Email email){
-        this.email = email;
-    }
-
-    public Contact (Name name, PhoneNumber phoneNumber){
-        this.name=name;
-        this.phoneNumber = phoneNumber;
-    }
-
-    public Contact(Name name, Email email) {
-        this.name = name;
-        this.email = email;
-    }
-
-    public Contact(PhoneNumber phoneNumber, Email email) {
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-    }
-
-    public Contact(Name name, PhoneNumber phoneNumber, Email email) {
+    public Contact(String name, String phoneNumber, String email) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
-    }
-
-    public Contact(String name, String phoneNumber,String email) {
-        this.name = new Name(name);
-        this.phoneNumber = new PhoneNumber(phoneNumber);
-        this.email = new Email(email);
-    }
-
-    public String getName() {
-        return name.getName();
-    }
-
-    public void setName(String name) {
-        this.name.setName(name);
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber.getPhoneNumber();
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber.setPhoneNumber(phoneNumber);
+        this.phoneNumber= phoneNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public String getEmail() {
-        return email.getEmail();
+        return email;
     }
 
     public void setEmail(String email) {
-        this.email.setEmail(email);
+        this.email=email;
     }
-    public String[] getContactContent(Contact contact) {
 
-        String name = contact.getName();
-        String phoneNumber = contact.getPhoneNumber();
-        String email = contact.getEmail();
+    public String[] getContent(Contact contact) {
 
-        String[] contents = new String[] {name, phoneNumber,email};
+        String name = this.name;
+        String phoneNumber = this.phoneNumber;
+        String email = this.email;
+
+        String[] contents = new String[]{name, phoneNumber, email};
         return contents;
-        }
     }
+
+    public void editName() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("새로운 이름을 입력하세요");
+        String name = scanner.next();
+        this.name = name;
+    }  public void editPhoneNumber() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("새로운 전화번호를 입력하세요");
+        String phoneNumber = scanner.next();
+        this.phoneNumber = phoneNumber;
+    }  public void editEmail() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("새로운 이름을 입력하세요");
+        String email = scanner.next();
+        this.email = email;
+    }
+
+
+}
+
 
 
 
