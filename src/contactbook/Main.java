@@ -1,7 +1,6 @@
 package contactbook;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -23,7 +22,7 @@ public class Main {
                     contactBook.editMenu();
                     break;
                 case 4:
-                    contactBook.findByName();
+                    findMenu(contactBook);
                     break;
                 case 5:
                     contactBook.deleteMenu();
@@ -45,5 +44,29 @@ public class Main {
         System.out.print(">");
         int menu = scanner.nextInt();
         return menu;
+    }
+
+    public static void findMenu(ContactBook contactBook){
+        Scanner scanner = new Scanner(System.in);
+        FINDMENU:while(true){
+            System.out.println("1.이름으로 검색");
+            System.out.println("2.전화번호로 검색");
+            System.out.println("3.이메일로 검색");
+            System.out.println("4.메인메뉴로 나가기");
+            int findMenu = scanner.nextInt();
+            switch (findMenu){
+                case 1:
+                    contactBook.findByName();
+                    break;
+                case 2:
+                    contactBook.findByphoneNumber();
+                    break;
+                case 3:
+                    contactBook.findByEmail();
+                    break;
+                case 4:
+                    break FINDMENU;
+            }
+        }
     }
 }
