@@ -16,10 +16,6 @@ public class ContactBook {
         contacts = new ArrayList<>();
     }
 
-    public void addContact(Contact contact) {
-        contacts.add(contact);
-    }
-
     public void addContact() throws FileNotFoundException {
 
         System.out.println("연락처 입력");
@@ -71,9 +67,7 @@ public class ContactBook {
         FileOutputStream fileOutputStream = new FileOutputStream(fileName);
         PrintStream printStream = new PrintStream(fileOutputStream);
 
-        for (int i = 0; i < contacts.size(); i++) {
-            Contact contact = contacts.get(i);
-
+        for (Contact contact : contacts) {
             String[] contents = contact.getContent(contact);
             String name = contents[0];
             String phoneNumber = contents[1];
@@ -102,8 +96,7 @@ public class ContactBook {
         System.out.println("검색할 이름을 입력하세요.");
         String name = scanner.next();
         ArrayList<Contact> nameSearchResult = new ArrayList<>();
-        for (int i = 0; i < contacts.size(); i++) {
-            Contact contact = contacts.get(i);
+        for (Contact contact : contacts) {
             if (contact.getName().contains(name)) {
                 nameSearchResult.add(contact);
             }
@@ -117,8 +110,7 @@ public class ContactBook {
         System.out.println("검색할 전화번호를 입력하세요.");
         String phoneNumber = scanner.next();
         ArrayList<Contact> numberSearchResult = new ArrayList<>();
-        for (int i = 0; i < contacts.size(); i++) {
-            Contact contact = contacts.get(i);
+        for (Contact contact : contacts) {
             if (contact.getPhoneNumber().contains(phoneNumber)) {
                 numberSearchResult.add(contact);
             }
@@ -132,8 +124,7 @@ public class ContactBook {
         System.out.println("검색할 이메일을 입력하세요.");
         String email = scanner.next();
         ArrayList<Contact> emailSearchResult = new ArrayList<>();
-        for (int i = 0; i < contacts.size(); i++) {
-            Contact contact = contacts.get(i);
+        for (Contact contact : contacts) {
             if (contact.getEmail().contains(email)) {
                 emailSearchResult.add(contact);
             }

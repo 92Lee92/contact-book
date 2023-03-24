@@ -8,7 +8,7 @@ public class Main {
 
         ContactBook contactBook = new ContactBook();
         contactBook.load();
-        int menu = 0;
+        int menu;
         RUN: while(true){
             menu = mainMenu();
             switch (menu){
@@ -42,13 +42,12 @@ public class Main {
         System.out.println("원하시는 메뉴를 선택해주세요 ");
         System.out.println("1.연락처 입력\t2.연락처 조회\t3.연락처 수정\n4.연락처 검색\t5.연락처 삭제\t6.종료" );
         System.out.print(">");
-        int menu = scanner.nextInt();
-        return menu;
+        return scanner.nextInt();
     }
 
     public static void findMenu(ContactBook contactBook){
         Scanner scanner = new Scanner(System.in);
-        FINDMENU:while(true){
+        MENU:while(true){
             System.out.println("1.이름으로 검색");
             System.out.println("2.전화번호로 검색");
             System.out.println("3.이메일로 검색");
@@ -65,7 +64,7 @@ public class Main {
                     contactBook.findByEmail();
                     break;
                 case 4:
-                    break FINDMENU;
+                    break MENU;
             }
         }
     }
