@@ -1,5 +1,7 @@
 package contactbook;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -49,7 +51,7 @@ public class ContactBook {
         }
     }
 
-    public void print(ArrayList<Contact> contacts) {
+    public void print(@NotNull ArrayList<Contact> contacts) {
         System.out.println("----------------------------------");
         if(contacts.size()==0)
             System.out.println("검색 결과가 없습니다.");
@@ -102,7 +104,7 @@ public class ContactBook {
         ArrayList<Contact> nameSearchResult = new ArrayList<>();
         for (int i = 0; i < contacts.size(); i++) {
             Contact contact = contacts.get(i);
-            if (contact.getName().equals(name)) {
+            if (contact.getName().contains(name)) {
                 nameSearchResult.add(contact);
             }
         }
@@ -117,7 +119,7 @@ public class ContactBook {
         ArrayList<Contact> numberSearchResult = new ArrayList<>();
         for (int i = 0; i < contacts.size(); i++) {
             Contact contact = contacts.get(i);
-            if (contact.getPhoneNumber().equals(phoneNumber)) {
+            if (contact.getPhoneNumber().contains(phoneNumber)) {
                 numberSearchResult.add(contact);
             }
         }
@@ -132,7 +134,7 @@ public class ContactBook {
         ArrayList<Contact> emailSearchResult = new ArrayList<>();
         for (int i = 0; i < contacts.size(); i++) {
             Contact contact = contacts.get(i);
-            if (contact.getEmail().equals(email)) {
+            if (contact.getEmail().contains(email)) {
                 emailSearchResult.add(contact);
             }
         }
@@ -172,20 +174,71 @@ public class ContactBook {
 
         save();
     }
+    public void deleteMenu() throws FileNotFoundException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("연락처 수정");
+        MENU:while(true){
+            System.out.println("1.이름으로 검색\t2.전화번호로 검색\t3.이메일로검색\t4.전체 목록 조회\t5.종료");
+            int menu = scanner.nextInt();
+            switch (menu){
+                case 1:
+                    ArrayList<Contact> res = findByName();
+                    if(res.size()!=0)
+                        deleteSubMenu(res);
+                    break;
+                case 2:
+                    res =findByphoneNumber();
+                    if(res.size()!=0)
+                        deleteSubMenu(res);
+                    break;
+                case 3:
+                    res =findByEmail();
+                    if(res.size()!=0)
+                        deleteSubMenu(res);
+                    break;
+                case 4:
+                    print();
+                    deleteSubMenu();
+                    break;
+                case 5:
+                    break MENU;
+            }
+        }
+
+        save();
+    }
 
     private void deleteContact(Contact toDeleteContact) {
         contacts.remove(toDeleteContact);
     }
 
-    public void deleteMenu() throws FileNotFoundException {
+    public void deleteSubMenu() throws FileNotFoundException {
         System.out.println("연락처 삭제");
         Scanner scanner = new Scanner(System.in);
-        print();
 
         System.out.println("삭제할 연락처의 번호를 입력하세요");
-        int toDelete = scanner.nextInt();
+        int idx = scanner.nextInt()-1;
 
-        Contact toEditContact = contacts.get(toDelete - 1);
+        Contact toEditContact = contacts.get(idx);
+        System.out.println("1.삭제 2.취소");
+        int menu = scanner.nextInt();
+        switch (menu) {
+            case 1:
+                deleteContact(toEditContact);
+                break;
+            case 2:
+                break;
+        }
+        save();
+    }
+    public void deleteSubMenu(@NotNull ArrayList<Contact> contacts) throws FileNotFoundException {
+        System.out.println("연락처 삭제");
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("삭제할 연락처의 번호를 입력하세요");
+        int idx = scanner.nextInt()-1;
+
+        Contact toEditContact = contacts.get(idx);
         System.out.println("1.삭제 2.취소");
         int editMenu = scanner.nextInt();
         switch (editMenu) {
@@ -201,9 +254,9 @@ public class ContactBook {
     public void editSubMenu(){
         System.out.println("수정할 연락처의 번호를 입력하세요");
         Scanner scanner = new Scanner(System.in);
-        int toEdit = scanner.nextInt();
+        int idx = scanner.nextInt() - 1;
 
-        Contact toEditContact = contacts.get(toEdit - 1);
+        Contact toEditContact = contacts.get(idx);
         System.out.println("1.이름 수정  2.전화번호 수정 3.이메일 수정 4. 취소");
         int editMenu = scanner.nextInt();
         switch (editMenu) {
@@ -220,15 +273,15 @@ public class ContactBook {
                 break;
         }
     }
-    public void editSubMenu(ArrayList<Contact> contacts){
+    public void editSubMenu(@NotNull ArrayList<Contact> contacts){
         System.out.println("수정할 연락처의 번호를 입력하세요");
         Scanner scanner = new Scanner(System.in);
-        int toEdit = scanner.nextInt();
+        int idx = scanner.nextInt() - 1;
 
-        Contact toEditContact = contacts.get(toEdit - 1);
+        Contact toEditContact = contacts.get(idx);
         System.out.println("1.이름 수정  2.전화번호 수정 3.이메일 수정 4. 취소");
-        int editMenu = scanner.nextInt();
-        switch (editMenu) {
+        int menu = scanner.nextInt();
+        switch (menu) {
             case 1:
                 toEditContact.editName();
                 break;

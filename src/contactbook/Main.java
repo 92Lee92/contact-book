@@ -34,13 +34,13 @@ public class Main {
         }
 
 
-        contactBook.print();
+//        contactBook.print();
     }
     public static int mainMenu(){
         System.out.println("----------------------------------");
         Scanner scanner = new Scanner(System.in);
         System.out.println("원하시는 메뉴를 선택해주세요 ");
-        System.out.println("1.연락처 입력\t2.연락처 조회\t3.연락처 수정\n4.연락처 검색\t5.연락처 삭제" );
+        System.out.println("1.연락처 입력\t2.연락처 조회\t3.연락처 수정\n4.연락처 검색\t5.연락처 삭제\t6.종료" );
         System.out.print(">");
         int menu = scanner.nextInt();
         return menu;
