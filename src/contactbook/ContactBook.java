@@ -95,51 +95,51 @@ public class ContactBook {
         Scanner scanner = new Scanner(System.in);
         System.out.println("검색할 이름을 입력하세요.");
         String name = scanner.next();
-        ArrayList<Contact> nameSearchResult = new ArrayList<>();
+        ArrayList<Contact> result = new ArrayList<>();
         for (Contact contact : contacts) {
             if (contact.getName().contains(name)) {
-                nameSearchResult.add(contact);
+                result.add(contact);
             }
         }
-        print(nameSearchResult);
-        return nameSearchResult;
+        print(result);
+        return result;
     }
 
     public ArrayList<Contact> findByphoneNumber() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("검색할 전화번호를 입력하세요.");
         String phoneNumber = scanner.next();
-        ArrayList<Contact> numberSearchResult = new ArrayList<>();
+        ArrayList<Contact> result = new ArrayList<>();
         for (Contact contact : contacts) {
             if (contact.getPhoneNumber().contains(phoneNumber)) {
-                numberSearchResult.add(contact);
+                result.add(contact);
             }
         }
-        print(numberSearchResult);
-        return numberSearchResult;
+        print(result);
+        return result;
     }
 
     public ArrayList<Contact> findByEmail() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("검색할 이메일을 입력하세요.");
         String email = scanner.next();
-        ArrayList<Contact> emailSearchResult = new ArrayList<>();
+        ArrayList<Contact> result = new ArrayList<>();
         for (Contact contact : contacts) {
             if (contact.getEmail().contains(email)) {
-                emailSearchResult.add(contact);
+                result.add(contact);
             }
         }
-        print(emailSearchResult);
-        return emailSearchResult;
+        print(result);
+        return result;
     }
 
     public void editMenu() throws FileNotFoundException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("연락처 수정");
-        EDITMENU:while(true){
+        MENU:while(true){
             System.out.println("1.이름으로 검색\t2.전화번호로 검색\t3.이메일로검색\t4.전체 목록 조회\t5.종료");
-            int editMenu = scanner.nextInt();
-            switch (editMenu){
+            int menu = scanner.nextInt();
+            switch (menu){
                 case 1:
                     ArrayList<Contact> res = findByName();
                     if(res.size()!=0)
@@ -159,10 +159,9 @@ public class ContactBook {
                     print();
                     editSubMenu();
                 case 5:
-                    break EDITMENU;
+                    break MENU;
             }
         }
-
         save();
     }
     public void deleteMenu() throws FileNotFoundException {
